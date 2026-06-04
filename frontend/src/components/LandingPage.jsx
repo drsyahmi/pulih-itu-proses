@@ -200,13 +200,7 @@ export default function LandingPage() {
     }
   };
 
-  const handleDownloadMock = () => {
-    // Simulating ebook PDF download
-    const link = document.createElement('a');
-    link.href = '#';
-    link.setAttribute('download', 'Pulih_Itu_Proses_Ebook.pdf');
-    alert('Simulasi muat turun ebook "Pulih Itu Proses.pdf" telah bermula!');
-  };
+
 
   return (
     <div className="landing-container">
@@ -427,22 +421,16 @@ export default function LandingPage() {
           ) : (
             <div className="success-card glass fade-in">
               <div className="success-icon">✨</div>
-              <h2>Terima kasih, {registeredUser?.name}!</h2>
+              <h2>Pendaftaran Berjaya, {registeredUser?.name}!</h2>
               <p className="success-message">
-                Naskhah digital **"Pulih Itu Proses"** sedia untuk dibaca. Kami telah menghantar pautan muat turun ke e-mel **{registeredUser?.email}**.
+                Naskhah digital **"Pulih Itu Proses"** sedang dihantar secara automatik terus ke e-mel **{registeredUser?.email}**.
               </p>
 
               <div className="simulated-notice">
                 <h4>💡 Sila semak peti masuk e-mel anda:</h4>
                 <p>
-                  Sistem kami telah menghantar e-mel alu-aluan beserta pautan muat turun terus ke e-mel yang didaftarkan. Sila semak folder inbox atau folder spam/promosi anda jika e-mel lambat diterima.
+                  E-mel alu-aluan berserta lampiran fail PDF ebook akan tiba dalam masa seminit. Sila semak folder inbox atau folder spam/promosi anda jika e-mel lambat diterima.
                 </p>
-              </div>
-
-              <div className="success-actions">
-                <button className="btn btn-accent" onClick={handleDownloadMock}>
-                  📥 Muat Turun Ebook Terus (PDF)
-                </button>
               </div>
             </div>
           )}
