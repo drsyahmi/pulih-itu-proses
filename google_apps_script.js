@@ -56,15 +56,20 @@ function doPost(e) {
     ]);
     
     // --- HANTAR E-MEL ALIU-ALUAN BERSERTA LAMPIRAN PDF ---
-    var subject = "Naskhah Ebook Anda: Pulih Itu Proses 🌿";
+    var subject = "Hadiah Ketenangan Untuk Anda: Ebook Pulih Itu Proses 🌻";
     var emailBody = "Hai " + data.name + ",\n\n" +
-      "Terima kasih kerana memuat turun ebook \"Pulih Itu Proses\". Saya amat menghargai kesediaan anda untuk memulakan langkah pemulihan jiwa ini.\n\n" +
-      "Saya telah sertakan fail PDF ebook tersebut secara terus sebagai lampiran di dalam e-mel ini supaya anda boleh membacanya pada bila-bila masa.\n\n" +
-      "Harapan saya, naskhah kecil ini sedikit sebanyak dapat menemani perjalanan anda untuk mengatasi cabaran: \"" + data.struggle + "\".\n\n" +
-      "Selamat membaca dan teruskan melangkah, kerana setiap proses pemulihan itu amat berharga.\n\n" +
-      "Salam hangat,\n" +
+      "Terima kasih kerana mendaftar untuk mendapatkan ebook \"Pulih Itu Proses\". Kehadiran naskhah ini di peti masuk anda adalah permulaan kepada fasa baharu kehidupan anda yang lebih tenang.\n\n" +
+      "Saya tahu anda kini sedang berusaha menguruskan cabaran \"" + data.struggle + "\". Kadang-kala, kita terlalu sibuk menjaga orang lain sehingga kita terlupa untuk menjaga diri sendiri. Ebook ini ditulis khas untuk membantu anda membina semula daya tahan jiwa (resilience) secara praktikal.\n\n" +
+      "Ebook PDF anda sedia dibaca sebagai lampiran e-mel ini. Berikut adalah tiga perkara utama yang akan anda pelajari:\n" +
+      "1. Redefinisi Kuat: Mengapa menangis dan berehat itu juga adalah sebahagian daripada kekuatan sejati.\n" +
+      "2. Langkah Praktikal Jurnal: Latihan ringkas untuk menulis refleksi bagi menguraikan benang emosi yang berselubung di minda.\n" +
+      "3. Lampu Merah Kesihatan Jiwa: Bila waktu terbaik untuk anda mencari bantuan profesional.\n\n" +
+      "Saya berharap panduan klinikal dan kemanusiaan ini dapat membantu anda membina kualiti tidur, mengurangkan stres harian, dan berdamai dengan fasa pemulihan anda sendiri.\n\n" +
+      "Ingatlah, pulih bukanlah satu destinasi yang cepat, tetapi ia adalah satu proses yang indah untuk dilalui hari demi hari.\n\n" +
+      "Selamat meneroka kembara pemulihan anda!\n\n" +
+      "Salam hormat,\n" +
       "Dr. Syahmi\n" +
-      "Penulis Ebook \"Pulih Itu Proses\"";
+      "Doktor Kesihatan Jiwa & Penulis";
 
     var attachment = null;
     if (EBOOK_FILE_ID && EBOOK_FILE_ID !== 'MASUKKAN_ID_FAIL_DI_SINI') {
