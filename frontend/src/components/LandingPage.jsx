@@ -85,7 +85,7 @@ function ChapterIcon({ name }) {
   }
 }
 
-export default function LandingPage({ onToggleAdmin }) {
+export default function LandingPage() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -217,9 +217,6 @@ export default function LandingPage({ onToggleAdmin }) {
             <span className="logo-icon">🌿</span>
             <span className="logo-text">Pulih Itu Proses</span>
           </div>
-          <button className="btn btn-secondary nav-btn" onClick={onToggleAdmin}>
-            ⚙️ Dashboard Admin
-          </button>
         </div>
       </header>
 
@@ -436,18 +433,15 @@ export default function LandingPage({ onToggleAdmin }) {
               </p>
 
               <div className="simulated-notice">
-                <h4>💡 Nota Simulasi Pengembang:</h4>
+                <h4>💡 Sila semak peti masuk e-mel anda:</h4>
                 <p>
-                  Sistem kami telah mendaftarkan anda ke pangkalan data SQLite dan menjadualkan susulan e-mel automatik (Hari 0, Hari 3, & Hari 7). Anda boleh melihat e-mel ini dijana di **Dashboard Admin**.
+                  Sistem kami telah menghantar e-mel alu-aluan beserta pautan muat turun terus ke e-mel yang didaftarkan. Sila semak folder inbox atau folder spam/promosi anda jika e-mel lambat diterima.
                 </p>
               </div>
 
               <div className="success-actions">
                 <button className="btn btn-accent" onClick={handleDownloadMock}>
                   📥 Muat Turun Ebook Terus (PDF)
-                </button>
-                <button className="btn btn-secondary" onClick={onToggleAdmin}>
-                  ⚙️ Periksa Dashboard Admin
                 </button>
               </div>
             </div>

@@ -14,32 +14,7 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'drsyahmi123';
 
-// Middleware to authenticate admin requests
-const authenticateAdmin = (req, res, next) => {
-  const authHeader = req.headers['authorization'];
-  if (!authHeader) {
-    return res.status(401).json({ error: 'Akses dinafikan. Token pengesahan diperlukan.' });
-  }
-
-  const token = authHeader.split(' ')[1];
-  if (token !== ADMIN_PASSWORD) {
-    return res.status(403).json({ error: 'Akses dinafikan. Kata laluan tidak sah.' });
-  }
-
-  next();
-};
-
-// Route to verify admin passcode
-app.post('/api/admin/verify', (req, res) => {
-  const { passcode } = req.body;
-  if (passcode === ADMIN_PASSWORD) {
-    res.json({ success: true });
-  } else {
-    res.status(401).json({ error: 'Kata laluan salah!' });
-  }
-});
 
 // Configure Nodemailer SMTP Transporter
 const transporter = nodemailer.createTransport({
@@ -114,55 +89,37 @@ function createTables() {
   });
 }
 
-// Route to get all subscribers (Protected)
-app.get('/api/subscribers', authenticateAdmin, (req, res) => {
-  db.all('SELECT * FROM subscribers ORDER BY created_at DESC', [], (err, rows) => {
-    if (err) {
-      res.status(500).json({ error: err.message });
-      return;
-    }
-    res.json(rows);
-  });
-});
 
-// Route to get all simulated emails with subscriber names (Protected)
-app.get('/api/emails', authenticateAdmin, (req, res) => {
-  const query = `
-    SELECT e.*, s.name as subscriber_name, s.email as subscriber_email 
-    FROM simulated_emails e
-    JOIN subscribers s ON e.subscriber_id = s.id
-    ORDER BY e.created_at DESC, e.sent_days_offset ASC
-  `;
-  db.all(query, [], (err, rows) => {
-    if (err) {
-      res.status(500).json({ error: err.message });
-      return;
-    }
-    res.json(rows);
-  });
-});
 
-// Route to get statistics for dashboard (Protected)
-app.get('/api/stats', authenticateAdmin, (req, res) => {
-  db.all('SELECT struggle, COUNT(*) as count FROM subscribers GROUP BY struggle', [], (err, struggleRows) => {
-    if (err) {
-      res.status(500).json({ error: err.message });
-      return;
-    }
+// Function to forward subscriber data to Google Sheets Webhook
+const forwardToGoogleSheets = async (name, email, struggle) => {
+  const url = process.env.GOOGLE_SHEETS_URL;
+  if (!url) {
+    console.log('[GOOGLE SHEETS] GOOGLE_SHEETS_URL is not set. Skipping forward.');
+    return;
+  }
 
-    db.get('SELECT COUNT(*) as total FROM subscribers', [], (err, totalRow) => {
-      if (err) {
-        res.status(500).json({ error: err.message });
-        return;
-      }
-
-      res.json({
-        totalSubscribers: totalRow.total,
-        struggleStats: struggleRows
-      });
+  try {
+    console.log(`[GOOGLE SHEETS] Sending subscriber data to webhook: ${url}`);
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        struggle,
+        timestamp: new Date().toISOString()
+      }),
+      redirect: 'follow'
     });
-  });
-});
+    
+    console.log(`[GOOGLE SHEETS] Sent successfully. Status: ${response.status}`);
+  } catch (error) {
+    console.error('[GOOGLE SHEETS] Failed to forward data:', error.message);
+  }
+};
 
 // Route to register a subscriber
 app.post('/api/subscribe', (req, res) => {
@@ -247,6 +204,9 @@ app.post('/api/subscribe', (req, res) => {
               });
           }
 
+          // Forward to Google Sheets if webhook URL exists
+          forwardToGoogleSheets(name, email, struggle);
+
           res.status(201).json({
             message: 'Pendaftaran berjaya!',
             subscriber: { id: subscriberId, name, email, struggle }
@@ -258,17 +218,7 @@ app.post('/api/subscribe', (req, res) => {
   insertSubscriber.finalize();
 });
 
-// Route to delete a subscriber (Protected)
-app.delete('/api/subscribers/:id', authenticateAdmin, (req, res) => {
-  const { id } = req.params;
-  db.run('DELETE FROM subscribers WHERE id = ?', id, function (err) {
-    if (err) {
-      res.status(500).json({ error: err.message });
-      return;
-    }
-    res.json({ message: 'Pelanggan berjaya dipadam.', changes: this.changes });
-  });
-});
+
 
 // Serve static assets from React frontend dist (for production)
 const distPath = path.resolve(__dirname, '../frontend/dist');
