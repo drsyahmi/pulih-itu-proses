@@ -120,3 +120,21 @@ function formatTimestamp(isoString) {
     return new Date();
   }
 }
+
+// ==========================================
+// 💡 FUNGSI KEBENARAN MANUAL (AUTHORIZATION)
+// ==========================================
+// Sila pilih fungsi "triggerAuthorization" pada bar menu atas editor Apps Script, 
+// kemudian klik butang "Run" (ikon Play) untuk meluluskan kebenaran Gmail & Drive.
+function triggerAuthorization() {
+  Logger.log("Mencetuskan kebenaran Gmail dan Drive...");
+  try {
+    var file = DriveApp.getFileById(EBOOK_FILE_ID);
+    Logger.log("Akses Google Drive berjaya. Nama fail: " + file.getName());
+    
+    GmailApp.sendEmail(Session.getActiveUser().getEmail(), "Ujian Kebenaran Webhook 🌿", "Tahniah! Skrip anda telah mendapat kebenaran penuh.");
+    Logger.log("E-mel ujian berjaya dihantar ke peti masuk anda (" + Session.getActiveUser().getEmail() + ").");
+  } catch (err) {
+    Logger.log("Ralat semasa ujian kebenaran: " + err.toString());
+  }
+}
