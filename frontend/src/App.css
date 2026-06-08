@@ -887,6 +887,14 @@ footer {
   .hero-visual-side {
     order: -1;
   }
+  .journey-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .journey-showcase {
+    position: static;
+    padding: 28px;
+  }
   .email-grid {
     grid-template-columns: 1fr;
   }
@@ -901,6 +909,65 @@ footer {
   }
   .author-info {
     text-align: center;
+  }
+  .form-card, .success-card {
+    padding: 32px 24px;
+  }
+}
+
+@media(max-width: 600px) {
+  .container {
+    padding: 0 16px;
+  }
+  .logo-text {
+    font-size: 18px;
+  }
+  .hero h1 {
+    font-size: 28px;
+    margin-bottom: 16px;
+  }
+  .hero-desc {
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+  .bullet p {
+    font-size: 14px;
+  }
+  .section-title h2 {
+    font-size: 26px;
+  }
+  .showcase-header h2 {
+    font-size: 22px;
+  }
+  .showcase-desc {
+    font-size: 14px;
+  }
+  .form-card, .success-card {
+    padding: 24px 16px;
+    border-radius: 16px;
+  }
+  .form-card h2, .success-card h2 {
+    font-size: 22px;
+  }
+  .form-input, .form-select, .btn {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+  .author-card {
+    padding: 24px 16px;
+  }
+  .author-avatar-container svg {
+    width: 90px;
+    height: 90px;
+  }
+  .author-info h2 {
+    font-size: 24px;
+  }
+  .author-bio {
+    font-size: 13.5px;
+  }
+  .journey-node-label .node-title {
+    font-size: 13.5px;
   }
 }
 
